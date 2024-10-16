@@ -1,0 +1,95 @@
+/* Wrapper to manage sidebar and content */
+#wrapper {
+  display: flex;
+  width: 100%;
+}
+
+#sidebar-wrapper {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  background-color: #343a40;
+  padding-top: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 10px;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #ffffff;
+}
+
+#page-content-wrapper {
+  flex: 1;
+  margin-left: 250px;
+  padding: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: -250px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+  margin-left: 0;
+}
+
+.list-group-item {
+  border: none;
+  padding: 15px;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.list-group-item:hover {
+  background-color: #495057;
+  cursor: pointer;
+}
+
+.bg-dark {
+  background-color: #343a40 !important;
+}
+
+.navbar {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.table {
+  margin-top: 20px;
+}
+
+.table thead th {
+  background-color: #007bff;
+  color: white;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.container-fluid h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
