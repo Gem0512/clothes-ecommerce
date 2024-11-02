@@ -8,8 +8,9 @@ const CategoryFormModal = ({ category, onSave, onClose }) => {
       image: '',
     }
   );
-  const [imagePreview, setImagePreview] = useState(category ? category.image : '');
-
+  const [imagePreview, setImagePreview] = useState(
+    category ? category.image : ''
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,22 +25,25 @@ const CategoryFormModal = ({ category, onSave, onClose }) => {
     }
   };
 
-
   const handleSave = () => {
     onSave(formData);
-    console.log(formData)
+    console.log(formData);
     onClose();
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-h-screen overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-4">{category ? 'Edit category' : 'Add New category'}</h2>
+        <h2 className="text-2xl font-bold mb-4">
+          {category ? 'Edit category' : 'Add New category'}
+        </h2>
 
         <div className="">
           {/* Column 1 */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Name</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Name
+            </label>
             <input
               type="text"
               name="name"
@@ -50,7 +54,9 @@ const CategoryFormModal = ({ category, onSave, onClose }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Description</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Description
+            </label>
             <textarea
               name="description"
               value={formData.description}
@@ -61,7 +67,9 @@ const CategoryFormModal = ({ category, onSave, onClose }) => {
 
           {/* Column 2 */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Image</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Image
+            </label>
             <input
               type="file"
               accept="image/*"
@@ -69,10 +77,13 @@ const CategoryFormModal = ({ category, onSave, onClose }) => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
             />
             {imagePreview && (
-              <img src={imagePreview} alt="Preview" className="mt-4 w-32 h-32 object-cover" />
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="mt-4 w-32 h-32 object-cover"
+              />
             )}
           </div>
-
         </div>
 
         <button

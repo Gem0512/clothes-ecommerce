@@ -23,6 +23,7 @@ import Footer from '../../components/customer/Footer'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { jwtDecode } from 'jwt-decode'
+import { useTranslation } from 'react-i18next'
 
 export default function Cart() {
   const navigate = useNavigate()
@@ -136,7 +137,8 @@ export default function Cart() {
   };
   
 
-  
+  const { t, i18n } = useTranslation();
+
   return (
     <div  className="bg-customBackground" style={{ }}>
     <Box className="sticky top-0 bg-white shadow-lg z-50">
@@ -153,14 +155,14 @@ export default function Cart() {
         <div role="presentation" onClick={handleClick}>
             <Breadcrumbs aria-label="breadcrumb">
               <Link underline="hover" color="inherit" href="/">
-                Cart
+              {t('cart_title')}
               </Link>
               <Link
                 underline="hover"
                 color="inherit"
                 href="/material-ui/getting-started/installation/"
               >
-                Items
+                {t('items')}
               </Link>
               {/* <Typography sx={{ color: 'text.primary' }}>Breadcrumbs</Typography> */}
             </Breadcrumbs>
@@ -170,7 +172,7 @@ export default function Cart() {
                 marginTop: 5,
                 marginBottom: 2
             }}>
-                <Typography  variant="h4">Shopping cart</Typography>
+                <Typography  variant="h4">{t('cart')}</Typography>
             </Box>
             
             <Box sx={{display: 'flex', justifyContent: 'center', height: 'auto', marginBottom: 2}}>
@@ -239,7 +241,7 @@ export default function Cart() {
                         {/* Tình trạng sản phẩm */}
                         <Box sx={{ marginTop: 22 }}>
                           <DoneIcon sx={{ color: '#6FCFB8', marginRight: 1 }} size='small' />
-                          In stock
+                          {t('in_stock')}
                         </Box>
                       </Box>
                     </Box>
@@ -247,9 +249,9 @@ export default function Cart() {
                 </Box>
                 </Box>
                 <Box sx={{width: '35%', backgroundColor:"white", borderRadius: 2, height: 300, padding : 4, }} className="shadow-xl">
-                    <Typography sx={{ fontWeight: 'bold', fontSize: 22, marginBottom: 2}}>Oder Summary</Typography>
+                    <Typography sx={{ fontWeight: 'bold', fontSize: 22, marginBottom: 2}}>{t('oder_summary')}</Typography>
                     <Box sx={{display:'flex', justifyContent: 'space-between', padding: 2}}>
-                        <Typography>All products</Typography>
+                        <Typography>{t('all_product')}</Typography>
                         <Typography>{cartItems?.totalPrice}</Typography>
                     </Box>
                     <Divider></Divider>
@@ -264,7 +266,7 @@ export default function Cart() {
                     </Box> */}
                     <Divider></Divider>
                     <Box sx={{display:'flex', justifyContent: 'space-between', padding: 2, marginBottom: 3}}>
-                        <Typography sx={{ fontSize: 18}}>Selected products</Typography>
+                        <Typography sx={{ fontSize: 18}}>{t('selected_products')}</Typography>
                         <Typography  sx={{ fontSize: 18}}>{selectedTotal}</Typography>
                     </Box>
                     <Button sx={{width: '100%'}} variant="contained" 
@@ -276,7 +278,7 @@ export default function Cart() {
                         },
                       });}}
                       disabled={selectedTotal === 0} 
-                      >Check out</Button>
+                      >{t('check_out')}</Button>
                     
                 </Box>
             </Box>

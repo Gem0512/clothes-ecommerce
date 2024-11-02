@@ -140,7 +140,6 @@ export default function Header() {
   useEffect(() => {
     getCart(); // Gọi hàm getCart khi component được mount
   }, []);
-
   return (
     <header className="bg-customBackground" style={{ borderBottom: '1px solid #ccc' }}>
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
@@ -165,11 +164,11 @@ export default function Header() {
         {/* Desktop Navigation */}
         <PopoverGroup className="hidden lg:flex lg:gap-x-20">
           <a href="#" className="text-sm font-semibold leading-6 home" onClick={handleClickHome}>
-            HOME
+          {t('home')}
           </a>
           <Popover className="relative">
             <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 category">
-              CATEGORY
+            {t('category')}
               <ChevronDownIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
             </PopoverButton>
 
@@ -198,7 +197,7 @@ export default function Header() {
             </PopoverPanel>
           </Popover>
           <a href="#" className="text-sm font-semibold leading-6 sale">
-            SALE
+          {t('sale')}
           </a>
         </PopoverGroup>
         {/* Right Side Icons */}
@@ -252,20 +251,20 @@ export default function Header() {
                   className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   onClick={handleClickHome}
                 >
-                  HOME
+                  {t('home')}
                 </a>
                 <a
                   href="#"
                   className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   onClick={handleClickCategory}
                 >
-                  CATEGORY
+                  {t('category')}
                 </a>
                 <a
                   href="#"
                   className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                 >
-                  SALE
+                  {t('sale')}
                 </a>
               </div>
               <div className="py-6">
@@ -273,7 +272,7 @@ export default function Header() {
                   href="#"
                   className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                 >
-                  LOG OUT
+                  {t('logout')}
                 </a>
               </div>
             </div>

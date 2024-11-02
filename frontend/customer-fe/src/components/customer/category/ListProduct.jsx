@@ -8,6 +8,7 @@ import QuickView from './QuickView';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 function ColorDot({ color }) {
   return (
@@ -63,6 +64,7 @@ export default function ListProduct({ productsPerPage, products }) {
     });
   };
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="bg-white rounded-lg mt-4 p-3">
@@ -108,7 +110,7 @@ export default function ListProduct({ productsPerPage, products }) {
                   onClick={handleOpen}
                 >
                   <AddShoppingCartIcon></AddShoppingCartIcon>
-                  Add Product
+                  {t('add_product')}
                 </Button>
                 <Box sx={{ display: 'flex' }}>
                   <IconButton
@@ -138,7 +140,7 @@ export default function ListProduct({ productsPerPage, products }) {
             disabled={currentPage === 1}
             className="px-4 py-2 bg-gray-300 text-gray-700 hover:bg-teal-500 hover:text-white rounded-md disabled:opacity-50 transition ease-in-out duration-300"
           >
-            Previous
+            {t('previous')}
           </button>
           <select
             value={currentPage}
@@ -147,7 +149,7 @@ export default function ListProduct({ productsPerPage, products }) {
           >
             {Array.from({ length: totalPages }, (_, index) => (
               <option key={index + 1} value={index + 1}>
-                Page {index + 1}
+              {t('page')} {index + 1}
               </option>
             ))}
           </select>
@@ -156,7 +158,7 @@ export default function ListProduct({ productsPerPage, products }) {
             disabled={currentPage === totalPages}
             className="px-4 py-2 bg-gray-300 text-gray-700 hover:bg-teal-500 hover:text-white rounded-md disabled:opacity-50 transition ease-in-out duration-300"
           >
-            Next
+            {t('next')}
           </button>
         </div>
       </div>

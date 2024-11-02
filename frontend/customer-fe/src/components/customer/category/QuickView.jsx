@@ -9,6 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Button } from '@mui/material'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -69,6 +70,8 @@ console.log(userId, productId, quantity, selectedSize, selectedColor, image, pri
       console.error('Error adding item to cart:', error);
     }
   };
+
+  const { t, i18n } = useTranslation();
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <DialogBackdrop
@@ -101,14 +104,14 @@ console.log(userId, productId, quantity, selectedSize, selectedColor, image, pri
 
                   <section aria-labelledby="information-heading" className="mt-2">
                     <h3 id="information-heading" className="sr-only">
-                      Product information
+                    {t('product_information')}
                     </h3>
 
                     <p className="text-2xl text-gray-900">{productDetail?.price}</p>
 
                     {/* Reviews */}
                     <div className="mt-6">
-                      <h4 className="sr-only">Reviews</h4>
+                      <h4 className="sr-only">{t('reviews')}</h4>
                       <div className="flex items-center">
                         <div className="flex items-center">
                           {[0, 1, 2, 3, 4].map((rating) => (
@@ -122,20 +125,20 @@ console.log(userId, productId, quantity, selectedSize, selectedColor, image, pri
                             />
                           ))}
                         </div>
-                        <p className="sr-only">{productDetail?.rating} out of 5 stars</p>
+                        <p className="sr-only">{productDetail?.rating} {t('star')}</p>
                       </div>
                     </div>
                   </section>
 
                   <section aria-labelledby="options-heading" className="mt-10">
                     <h3 id="options-heading" className="sr-only">
-                      Product options
+                    {t('product_options')}
                     </h3>
 
                     <div>
                       {/* Colors */}
                       <fieldset aria-label="Choose a color">
-                        <legend className="text-sm font-medium text-gray-900">Color</legend>
+                        <legend className="text-sm font-medium text-gray-900">{t('color')}</legend>
 
                         <RadioGroup
                           value={selectedColor}
@@ -165,7 +168,7 @@ console.log(userId, productId, quantity, selectedSize, selectedColor, image, pri
                       </fieldset>
                       <div className="mt-6">
                         <label htmlFor="quantity" className="block text-sm font-medium text-gray-900 mb-1">
-                          Quantity
+                        {t('quantity')}
                         </label>
                         <input
                           type="number"
@@ -182,7 +185,7 @@ console.log(userId, productId, quantity, selectedSize, selectedColor, image, pri
                         <div className="flex items-center justify-between">
                           <div className="text-sm font-medium text-gray-900">Size</div>
                           <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                            Size guide
+                          {t('size_guide')}
                           </a>
                         </div>
 
@@ -236,7 +239,7 @@ console.log(userId, productId, quantity, selectedSize, selectedColor, image, pri
                         onClick={()=>{addToCart()}}
                         className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
-                        Add to bag
+                        {t('add_to_bag')}
                       </button>
                     </div>
                   </section>

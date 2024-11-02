@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { SketchPicker } from 'react-color';
-import axios from 'axios'
-const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
+import axios from 'axios';
+import Box from '@mui/material/Box';
+
+
+const ProductFormModal = ({ selectedCategory, product, onSave, onClose }) => {
   const [formData, setFormData] = useState(
     product || {
       name: '',
@@ -11,18 +14,23 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
       colors: [],
       price: '',
       rating: '',
-      categoryID: selectedCategory? selectedCategory._id:''
+      categoryID: selectedCategory ? selectedCategory._id : '',
     }
   );
 
-
-  const [imagePreview, setImagePreview] = useState(product ? product.image : '');
+  const [imagePreview, setImagePreview] = useState(
+    product ? product.image : ''
+  );
   const [showColorPicker, setShowColorPicker] = useState(false);
-  const [selectedColor, setSelectedColor] = useState({ name: '', class: '', selectedClass: '' });
+  const [selectedColor, setSelectedColor] = useState({
+    name: '',
+    class: '',
+    selectedClass: '',
+  });
 
   const availableSizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   const [categories, setCategories] = useState([]);
-//   const [selectedCategory, setSelectedCategory] = useState(''); // Danh mục đã chọn
+  //   const [selectedCategory, setSelectedCategory] = useState(''); // Danh mục đã chọn
 
   // Lấy danh sách sản phẩm từ API
   const fetchCategorys = async () => {
@@ -34,19 +42,16 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
     }
   };
 
-
-
   // Gọi API khi component được mount
   useEffect(() => {
     fetchCategorys();
   }, []);
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    console.log(formData)
+    console.log(formData);
   };
 
   const handleImageUpload = (e) => {
@@ -62,7 +67,9 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
     const isInStock = e.target.checked;
 
     if (sizeName) {
-      const updatedSizes = formData.sizes.filter(sizes => sizes.name !== sizeName);
+      const updatedSizes = formData.sizes.filter(
+        (sizes) => sizes.name !== sizeName
+      );
       updatedSizes.push({ name: sizeName, inStock: isInStock });
       setFormData({ ...formData, sizes: updatedSizes });
     }
@@ -77,40 +84,44 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
       const newColor = {
         name: selectedColor.name,
         class: selectedColor.class,
-        selectedClass: 'ring-gray-400'
+        selectedClass: 'ring-gray-400',
       };
       setFormData((prev) => ({
         ...prev,
-        colors: [...prev.colors, newColor]
+        colors: [...prev.colors, newColor],
       }));
       setSelectedColor({ name: '', class: '', selectedClass: '' });
       setShowColorPicker(false);
-      console.log(newColor)
+      console.log(newColor);
     }
   };
 
   const handleRemoveColor = (colorName) => {
     setFormData((prev) => ({
       ...prev,
-      colors: prev.colors.filter(color => color.name !== colorName)
+      colors: prev.colors.filter((color) => color.name !== colorName),
     }));
   };
 
   const handleSave = () => {
     onSave(formData);
-    console.log(formData)
+    console.log(formData);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    <Box className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-9999">
       <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-h-screen overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-4">{product ? 'Edit Product' : 'Add New Product'}</h2>
+        <h2 className="text-2xl font-bold mb-4">
+          {product ? 'Edit Product' : 'Add New Product'}
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Column 1 */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Name</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Name
+            </label>
             <input
               type="text"
               name="name"
@@ -121,7 +132,9 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Description</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Description
+            </label>
             <textarea
               name="description"
               value={formData.description}
@@ -131,7 +144,9 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Price</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Price
+            </label>
             <input
               type="number"
               name="price"
@@ -142,7 +157,9 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Rating</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Rating
+            </label>
             <input
               type="number"
               name="rating"
@@ -153,7 +170,9 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Category</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Category
+            </label>
             <select
               name="categoryID"
               value={formData.categoryID}
@@ -171,7 +190,9 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
 
           {/* Column 2 */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Image</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Image
+            </label>
             <input
               type="file"
               accept="image/*"
@@ -179,27 +200,40 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
             />
             {imagePreview && (
-              <img src={imagePreview} alt="Preview" className="mt-4 w-32 h-32 object-cover" />
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="mt-4 w-32 h-32 object-cover"
+              />
             )}
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Sizes</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Sizes
+            </label>
             <div className="grid grid-cols-2 gap-2">
               {availableSizes.map((size) => (
                 <div key={size} className="flex items-center">
                   <input
                     type="checkbox"
                     value={size}
-                    checked={formData.sizes.some(s => s.name === size)}
+                    checked={formData.sizes.some((s) => s.name === size)}
                     onChange={handleSizeChange}
                     className="mr-2 accent-blue-500 hover:cursor-pointer" // Thay đổi ở đây
                   />
                   <span className="text-gray-700 font-medium">{size}</span>
                   <input
                     type="checkbox"
-                    checked={formData.sizes.find(s => s.name === size)?.inStock || false}
-                    onChange={(e) => handleSizeChange({ target: { value: size, checked: e.target.checked } })}
+                    checked={
+                      formData.sizes.find((s) => s.name === size)?.inStock ||
+                      false
+                    }
+                    onChange={(e) =>
+                      handleSizeChange({
+                        target: { value: size, checked: e.target.checked },
+                      })
+                    }
                     className="ml-2 accent-blue-500 hover:cursor-pointer" // Thay đổi ở đây
                   />
                   <span className="ml-1">In Stock</span>
@@ -208,15 +242,16 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
             </div>
           </div>
 
-
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Colors</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Colors
+            </label>
             <div className="flex flex-wrap">
               {formData.colors.map((color) => (
                 <div key={color.name} className="flex items-center mr-2 mb-2">
                   <div
                     className={`${color.class} w-8 h-8 border rounded-full`}
-                    style={{backgroundColor:color.class}}
+                    style={{ backgroundColor: color.class }}
                   ></div>
                   <span className="ml-2">{color.name}</span>
                   <button
@@ -234,7 +269,9 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
                 type="text"
                 placeholder="Color Name"
                 value={selectedColor.name}
-                onChange={(e) => setSelectedColor({ ...selectedColor, name: e.target.value })}
+                onChange={(e) =>
+                  setSelectedColor({ ...selectedColor, name: e.target.value })
+                }
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
               />
               <button
@@ -243,7 +280,10 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
               >
                 {selectedColor.class ? (
-                  <div style={{ backgroundColor: selectedColor.class }} className="h-8 w-full rounded-md"></div>
+                  <div
+                    style={{ backgroundColor: selectedColor.class }}
+                    className="h-8 w-full rounded-md"
+                  ></div>
                 ) : (
                   'Choose a color'
                 )}
@@ -279,7 +319,7 @@ const ProductFormModal = ({selectedCategory, product, onSave, onClose }) => {
           Cancel
         </button>
       </div>
-    </div>
+    </Box>
   );
 };
 

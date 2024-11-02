@@ -1,6 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { HomeIcon, CubeIcon, ShoppingCartIcon, UserIcon } from "@heroicons/react/outline";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import {
+  HomeIcon,
+  CubeIcon,
+  ShoppingCartIcon,
+  UserIcon,
+} from '@heroicons/react/outline';
 
 export default function Sidebar() {
   return (
@@ -9,7 +14,7 @@ export default function Sidebar() {
         <h1 className="text-xl font-bold">Admin Panel</h1>
       </div>
       <nav className="px-2 py-4 flex-1">
-      <Link
+        <Link
           to="/dashboard"
           className="flex items-center block px-4 py-2 mt-2 text-sm font-semibold text-gray-800 bg-gray-100 rounded-lg hover:bg-gray-300 no-underline"
         >

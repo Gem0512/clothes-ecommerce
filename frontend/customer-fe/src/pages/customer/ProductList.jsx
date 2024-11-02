@@ -15,6 +15,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Footer from '../../components/customer/Footer'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 const products = [
   {
     id: 1,
@@ -89,6 +90,8 @@ export default function ProductList() {
   useEffect(() => {
     getCategories();
   }, []);
+
+  const { t, i18n } = useTranslation();
   return (
     <div  className="bg-customBackground">
     <Box  sx={{
@@ -164,7 +167,7 @@ export default function ProductList() {
             backgroundColor: 'white',
             borderRadius: 2
           }} className="shadow-xl">
-            <Typography>CATEGORY</Typography>
+            <Typography>{t('category')}</Typography>
           </Box>
         </Box>
       <Box style={{

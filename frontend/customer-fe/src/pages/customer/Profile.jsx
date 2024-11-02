@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'; // Thư viện điều hướng nếu b
 import Header from '../../components/customer/Header';
 import Footer from '../../components/customer/Footer';
 import { Input } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -16,6 +17,7 @@ const Profile = () => {
   const handleEditClick = () => {
     setIsEditing(!isEditing);
   };
+  const { t, i18n } = useTranslation();
   return (
     <div className="bg-gray-100  flex flex-col">
       {/* Header */}
@@ -38,11 +40,11 @@ const Profile = () => {
 
             {/* User Details */}
             <div className="text-left mb-6">
-              <h2 className="text-lg font-semibold mb-2">Thông tin cá nhân</h2>
+              <h2 className="text-lg font-semibold mb-2">{t('category')}</h2>
               {isEditing ? (
                 <form className="space-y-4">
                   <div className="mb-4">
-                    <label className="block text-gray-700 font-medium">Tên đầy đủ</label>
+                    <label className="block text-gray-700 font-medium">{t('full_name')}</label>
                     <Input
                       type="text"
                       value={user.name}
@@ -51,7 +53,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-gray-700 font-medium">Ngày sinh</label>
+                    <label className="block text-gray-700 font-medium">{t('date_birth')}</label>
                     <Input
                       type="date"
                       value={user.birthdate}
@@ -60,7 +62,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-gray-700 font-medium">Địa chỉ</label>
+                    <label className="block text-gray-700 font-medium">{t('address')}</label>
                     <Input
                       type="text"
                       value={user.address}
@@ -74,28 +76,28 @@ const Profile = () => {
                       onClick={handleEditClick}
                       className="bg-gray-500 text-white font-semibold py-2 px-4 rounded hover:bg-gray-600"
                     >
-                      Hủy
+                      {t('cancel')}
                     </button>
                     <button 
                       type="submit"
                       className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
                     >
-                      Lưu
+                      {t('confirm')}
                     </button>
                   </div>
                 </form>
               ) : (
                 <div>
                   <div className="mb-4">
-                    <label className="block text-gray-700 font-medium">Tên đầy đủ</label>
+                    <label className="block text-gray-700 font-medium">{t('full_name')}</label>
                     <p className="text-gray-800">{user.name}</p>
                   </div>
                   <div className="mb-4">
-                    <label className="block text-gray-700 font-medium">Ngày sinh</label>
+                    <label className="block text-gray-700 font-medium">{t('date_birth')}</label>
                     <p className="text-gray-800">{user.birthdate}</p>
                   </div>
                   <div className="mb-4">
-                    <label className="block text-gray-700 font-medium">Địa chỉ</label>
+                    <label className="block text-gray-700 font-medium">{t('address')}</label>
                     <p className="text-gray-800">{user.address}</p>
                   </div>
                 </div>

@@ -9,7 +9,7 @@ const Payment = () => {
   const handlePayment = async () => {
     try {
       const orderId = new Date().getTime().toString(); // Tạo orderId ngẫu nhiên
-      const response = await axios.post('http://localhost:3003/momo/create-payment', {
+      const response = await axios.post('https://7cb8-113-190-28-208.ngrok-free.app/momo/create-payment', {
         amount,
         orderId,
         orderInfo,

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t, i18n } = useTranslation();
   return (
     <footer className="bg-gray-800 text-white py-8">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
@@ -12,10 +14,10 @@ const Footer = () => {
 
         {/* Các liên kết quan trọng */}
         <div className="flex space-x-6">
-          <a href="/about" className="hover:underline">About Us</a>
-          <a href="/contact" className="hover:underline">Contact Us</a>
-          <a href="/privacy" className="hover:underline">Privacy Policy</a>
-          <a href="/terms" className="hover:underline">Terms of Service</a>
+          <a href="/about" className="hover:underline">{t('about_us')}</a>
+          <a href="/contact" className="hover:underline">{t('contact_us')}</a>
+          <a href="/privacy" className="hover:underline">{t('privacy_policy')}</a>
+          <a href="/terms" className="hover:underline">{t('terms_of_service')}</a>
         </div>
 
         {/* Các liên kết mạng xã hội */}
@@ -34,7 +36,7 @@ const Footer = () => {
 
       {/* Thông tin bản quyền */}
       <div className="mt-8 text-center text-sm text-gray-400">
-        © 2024 YourWebsite. All Rights Reserved.
+      {t('version')}
       </div>
     </footer>
   );

@@ -5,6 +5,8 @@ import Footer from '../../components/customer/Footer';
 import Header from '../../components/customer/Header';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import AddIcon from '@mui/icons-material/Add';
+import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -47,7 +49,7 @@ const style = {
   ];
 const Checkout = () => {
     const [selectedAddress, setSelectedAddress] = useState('');
-
+    const [paymentUrl, setPaymentUrl] = useState('');
     const handleChangeAddress = (event) => {
         setSelectedAddress(event.target.value);
     };
@@ -158,6 +160,56 @@ const Checkout = () => {
   const handleWardSelect = (event) => {
     setSelectedWard(event.target.value);
   };
+  // const [amount, setAmount] = useState('');
+  // const [orderInfo, setOrderInfo] = useState('');
+  const handlePayment = async () => {
+    try {
+      if (!selectedTotal || !selectedProducts || selectedProducts.length === 0) {
+        throw new Error('Dữ liệu không hợp lệ.');
+      }
+      selectedProducts.forEach(item => {
+        if (typeof item.size === 'string') {
+            item.size = JSON.parse(item.size);
+        }
+        if (typeof item.color === 'string') {
+            item.color = JSON.parse(item.color);
+        }
+    });
+    
+    // Chuyển đổi toàn bộ mảng thành chuỗi JSON
+    // const jsonString = JSON.stringify(data);
+
+      const amount = parseFloat(selectedTotal);
+
+      console.log(amount, typeof amount)
+      const orderInfo = JSON.stringify(selectedProducts);
+console.log(orderInfo)
+const orderInfoString = "ddddđ";
+
+      const orderId = new Date().getTime().toString(); // Tạo orderId ngẫu nhiên
+      const response = await axios.post('https://7cb8-113-190-28-208.ngrok-free.app/momo/create-payment', {
+        amount,
+        orderId,
+        orderInfo: orderInfoString,
+      });
+      
+      // Kiểm tra phản hồi từ API NestJS và lấy URL thanh toán
+      if (response.data && response.data.payUrl) {
+        setPaymentUrl(response.data.payUrl);
+        window.location.href = response.data.payUrl; // Chuyển hướng đến MoMo để thanh toán
+      }
+    } catch (error) {
+      console.error('MoMo API full error:', error); // Ghi log toàn bộ lỗi
+      const errorMessage = error.response?.data
+        ? JSON.stringify(error.response.data)
+        : error.message;
+      console.error('MoMo API error:', errorMessage);
+      throw new Error(errorMessage);
+    }
+      
+  };
+
+  const { t, i18n } = useTranslation();
 
   return (
     <div  className="bg-customBackground" style={{ }}>
@@ -175,14 +227,14 @@ const Checkout = () => {
         <div role="presentation" onClick={handleClick}>
             <Breadcrumbs aria-label="breadcrumb">
               <Link underline="hover" color="inherit" href="/">
-                Checkout
+              {t('check_out')}
               </Link>
               <Link
                 underline="hover"
                 color="inherit"
                 href="/material-ui/getting-started/installation/"
               >
-                Items
+                {t('items')}
               </Link>
               {/* <Typography sx={{ color: 'text.primary' }}>Breadcrumbs</Typography> */}
             </Breadcrumbs>
@@ -192,7 +244,7 @@ const Checkout = () => {
                 marginTop: 5,
                 marginBottom: 2
             }}>
-                <Typography  variant="h4">Checkout</Typography>
+                <Typography  variant="h4">{t('checkout')}</Typography>
             </Box>
             <Box
                 sx={{
@@ -206,11 +258,11 @@ const Checkout = () => {
             <Box sx={{width: '100%', backgroundColor:"white", borderRadius: 2, height: 'auto', padding : 2, }} className="shadow-xl">
                     <Box sx={{display:'flex', alignItems: "center"}}>
                         <FmdGoodIcon sx={{color: "#6FCFB8"}}></FmdGoodIcon>
-                        <Typography sx={{ fontWeight: 'bold', fontSize: 20, color: "#6FCFB8"}}>Delivery address</Typography>
+                        <Typography sx={{ fontWeight: 'bold', fontSize: 20, color: "#6FCFB8"}}>{t('delivery_address')}</Typography>
                     </Box>
                     <Box sx={{display:'flex', justifyContent: 'space-between', padding: 1}}>
-                        <Typography>Payment method</Typography>                
-                            <Button onClick={handleOpenDelivery}>Change</Button>
+                        <Typography>{t('payment_method')}</Typography>                
+                            <Button onClick={handleOpenDelivery}>{t('change')}</Button>
                     </Box>
                 </Box>
             
@@ -278,39 +330,38 @@ const Checkout = () => {
                 <Box sx={{width: '100%', backgroundColor:"white", borderRadius: 2, height: 400, padding : 2, }} className="shadow-xl">
                     {/* <Typography sx={{ fontWeight: 'bold', fontSize: 22,}}>Oder Summary</Typography> */}
                     <Box sx={{display:'flex', justifyContent: 'space-between', padding: 2}}>
-                        <Typography sx={{display:'flex', alignItems:'center'}}>Payment method</Typography>
+                        <Typography sx={{display:'flex', alignItems:'center'}}>{t('payment_method')}</Typography>
                         <Box sx={{display:'flex', alignItems:'center'}}>
-                            <Typography> Card</Typography>
-                            <Button>Change</Button>
+                            <Typography> {t('card_title')}</Typography>
+                            <Button>{t('change')}</Button>
                         </Box>
                     </Box>
                     <Divider></Divider>
                     <Box sx={{float: 'right'}}>
                         <Box sx={{display:'flex', justifyContent: 'space-between', padding: 2}}>
-                            <Typography>Merchandise Subtotal:</Typography>
+                            <Typography>{t('merchandise_subtotal')}</Typography>
                             <Typography>$5.00</Typography>
                         </Box>
                         {/* <Divider></Divider> */}
                         <Box sx={{display:'flex', justifyContent: 'space-between', padding: 2}}>
-                            <Typography>Shipping Total</Typography>
+                            <Typography>{t('shipping_total')}</Typography>
                             <Typography>$8.32</Typography>
                         </Box>
                         {/* <Divider></Divider> */}
                         <Box sx={{display:'flex', justifyContent: 'space-between', padding: 2, marginBottom: 3}}>
-                            <Typography sx={{ fontSize: 18}}>Total Payment</Typography>
+                            <Typography sx={{ fontSize: 18}}>{t('total_payment')}</Typography>
                             <Typography  sx={{ fontSize: 18}}>{selectedTotal}</Typography>
                         </Box>
                     </Box>
                     <Button sx={{width: '100%'}} variant="contained" 
-                    onClick={()=>{
-                      navigate('/checkout', {
-                        state: {
-                          selectedProducts,
-                          selectedTotal,
-                        },
-                      });}}
-                      >Check out</Button>
-                    
+                    onClick={handlePayment}
+                      >{t('check_out')}</Button>
+                      {paymentUrl && (
+                        <div>
+                          <h3>{t('payment')}</h3>
+                        </div>
+                      )}
+
                 </Box>
                 </Box>
             </Box>
@@ -331,7 +382,7 @@ const Checkout = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-      <FormLabel id="demo-radio-buttons-group-label">My Address</FormLabel>
+      <FormLabel id="demo-radio-buttons-group-label">{t('my_address')}</FormLabel>
       <Divider sx={{ marginTop: 2 }} />
 
       {/* Bật scroll cho danh sách địa chỉ */}
@@ -362,7 +413,7 @@ const Checkout = () => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Button>Edit</Button>
+                      <Button>{t('edit')}</Button>
                     </Box>
                   </Box>
                 }
@@ -377,13 +428,13 @@ const Checkout = () => {
             handleOpenNewAddress();
             handleCloseDelivery()
         }}>
-          <AddIcon /> Add new Address
+          <AddIcon /> {t('add_new_address')}
         </Button>
       </Box>
       <Divider sx={{ marginBottom: 2 }} />
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button onClick={handleCloseDelivery}>Cancel</Button>
-        <Button >Confirm</Button>
+        <Button onClick={handleCloseDelivery}>{t('cancel')}</Button>
+        <Button >{t('confirm')}</Button>
       </Box>
     </Box>
       </Modal>
@@ -395,20 +446,20 @@ const Checkout = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <FormLabel id="demo-radio-buttons-group-label">New Address</FormLabel>
+        <FormLabel id="demo-radio-buttons-group-label">{t('new_address')}</FormLabel>
       <Divider sx={{ marginTop: 2 }} />
 
       {/* Bật scroll cho danh sách địa chỉ */}
       <Box sx={{ maxHeight: 600, marginTop: 2}}>
         <Box sx={{display: 'flex', mb: 2}}>
-            <TextField  size="small" id="outlined-basic" label="Họ và tên" variant="outlined" />
+            <TextField  size="small" id="outlined-basic" label={t('full_name')} variant="outlined" />
             <TextField  size="small" id="outlined-basic" label="Số điện thoại" variant="outlined" />
         </Box>
 
         <Box>
         <Tabs value={tab} onChange={handleTabChange} aria-label="address tabs">
             <Tab 
-                label="Tỉnh" 
+                label={t('province')}
                 disabled={tab < 0} 
                 sx={{ 
                 fontSize: '12px',  // Chỉnh kích thước chữ nhỏ hơn
@@ -416,7 +467,7 @@ const Checkout = () => {
                 }} 
             />
             <Tab 
-                label="Huyện" 
+                label={t('district')}
                 disabled={tab < 1 || !selectedProvince} 
                 sx={{ 
                 fontSize: '12px',  
@@ -424,7 +475,7 @@ const Checkout = () => {
                 }} 
             />
             <Tab 
-                label="Xã" 
+                label={t('commune')}
                 disabled={tab < 2 || !selectedDistrict} 
                 sx={{ 
                 fontSize: '12px',  
@@ -436,7 +487,7 @@ const Checkout = () => {
 
             <FormControl fullWidth >
                 {tab === 0 && (
-                <Select value={selectedProvince} onChange={handleProvinceSelect} label="Tỉnh">
+                <Select value={selectedProvince} onChange={handleProvinceSelect} label={t('province')}>
                     {locations.map((location, index) => (
                     <MenuItem key={index} value={location.province}>
                         {location.province}
@@ -446,7 +497,7 @@ const Checkout = () => {
                 )}
 
                 {tab === 1 && (
-                <Select value={selectedDistrict} onChange={handleDistrictSelect} label="Huyện">
+                <Select value={selectedDistrict} onChange={handleDistrictSelect} label={t('district')}>
                     {districts.map((district, index) => (
                     <MenuItem key={index} value={district.name}>
                         {district.name}
@@ -456,7 +507,7 @@ const Checkout = () => {
                 )}
 
                 {tab === 2 && (
-                <Select value={selectedWard} onChange={handleWardSelect} label="Xã">
+                <Select value={selectedWard} onChange={handleWardSelect} label={t('commune')}>
                     {wards.map((ward, index) => (
                     <MenuItem key={index} value={ward}>
                         {ward}
@@ -469,14 +520,14 @@ const Checkout = () => {
 
             <Box mb={4}>
                 <Typography variant="body1">
-                <strong>Địa chỉ đã chọn:</strong> {selectedProvince}, {selectedDistrict}, {selectedWard}
+                <strong>{t('select_address')}</strong> {selectedProvince}, {selectedDistrict}, {selectedWard}
                 </Typography>
             </Box>
         </Box>
         <TextField fullWidth id="outlined-basic"  size="small" label="Street name, Building, Home no" variant="outlined" />
 
         <FormControl sx={{mt:4}}>
-            <FormLabel id="demo-radio-buttons-group-label">Label as</FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label">{t('label_as')}</FormLabel>
             <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue="female"
@@ -494,8 +545,8 @@ const Checkout = () => {
       
       <Divider sx={{ marginBottom: 2 }} />
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button onClick={handleCloseNewAddress}>Cancel</Button>
-        <Button >Confirm</Button>
+        <Button onClick={handleCloseNewAddress}>{t('cancel')}</Button>
+        <Button >{t('confirm')}</Button>
       </Box>
         </Box>
     </Modal>

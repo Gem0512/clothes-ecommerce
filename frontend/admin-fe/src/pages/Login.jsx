@@ -54,7 +54,10 @@ export default function Login() {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               Or{' '}
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a
+                href="#"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 start your 14-day free trial
               </a>
             </p>
@@ -102,13 +105,19 @@ export default function Login() {
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-900"
+                >
                   Remember me
                 </label>
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <a
+                  href="#"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
                   Forgot your password?
                 </a>
               </div>
@@ -128,7 +137,13 @@ export default function Login() {
       </div>
 
       {/* Right Side - Image */}
-      <div className="hidden w-1/2 bg-cover lg:block" style={{ backgroundImage: 'url(https://indiater.com/wp-content/uploads/2019/05/Free-Best-Fashion-Advertising-Ads-Banner-PSD-Template.jpg)' }}>
+      <div
+        className="hidden w-1/2 bg-cover lg:block"
+        style={{
+          backgroundImage:
+            'url(https://indiater.com/wp-content/uploads/2019/05/Free-Best-Fashion-Advertising-Ads-Banner-PSD-Template.jpg)',
+        }}
+      >
         {/* Optional content here */}
       </div>
     </div>

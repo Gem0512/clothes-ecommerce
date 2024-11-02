@@ -18,6 +18,7 @@ import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import QuickView from '../../components/customer/category/QuickView'
 import Footer from '../../components/customer/Footer'
 import axios from "axios"
+import { useTranslation } from 'react-i18next'
 const optionShow =[
   {
     id: 0,
@@ -119,6 +120,7 @@ export default function CategoryProduct() {
   useEffect(() => {
     getProducts();
   }, [categoryId, selected]);
+  const { t, i18n } = useTranslation();
 
   return (
     <div  className="bg-customBackground" style={{
@@ -138,7 +140,7 @@ export default function CategoryProduct() {
         <div role="presentation" onClick={handleClick}>
             <Breadcrumbs aria-label="breadcrumb">
               <Link underline="hover" color="inherit" href="/">
-                Category
+              {t('category')}
               </Link>
               <Link
                 underline="hover"
@@ -147,7 +149,7 @@ export default function CategoryProduct() {
               >
                 {categorySelected && categorySelected.name}
               </Link>
-              <Typography sx={{ color: 'text.primary' }}>Products</Typography>
+              <Typography sx={{ color: 'text.primary' }}>{t('products')}</Typography>
             </Breadcrumbs>
           </div>
         </Box>
@@ -171,7 +173,7 @@ export default function CategoryProduct() {
                 <div className="flex flex-col">
                   {/* Select Color */}
                   <div style={{ backgroundColor: 'white',marginTop: 10, borderRadius: 10, padding: 15}} className="shadow-xl">
-                    <label className="block mb-2 text-sm font-medium text-gray-700">Select Color</label>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">{t('select_color')}</label>
                     <div className="flex gap-2">
                       {colors.map((color, index) => (
                         <div
@@ -186,7 +188,7 @@ export default function CategoryProduct() {
 
                   {/* Select Size */}
                   <div style={{ backgroundColor: 'white',marginTop: 10, borderRadius: 10, padding: 15}} className="shadow-xl">
-                    <label className="block mb-2 text-sm font-medium text-gray-700">Select Size</label>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">{t('select_size')}</label>
                     <div className="flex gap-2">
                       {sizes.map((size, index) => (
                         <div

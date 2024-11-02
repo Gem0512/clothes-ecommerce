@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CategoryDetailModal = ({ category, onClose }) => {
-    console.log(">>>", category)
+  console.log('>>>', category);
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-2/3 max-h-screen overflow-y-auto flex">
@@ -17,10 +17,12 @@ const CategoryDetailModal = ({ category, onClose }) => {
         {/* Thông tin sản phẩm */}
         <div className="flex-grow">
           <h2 className="text-2xl font-bold mb-4">{category.name}</h2>
-          <p><strong>Description:</strong> {category.description}</p>
+          <p>
+            <strong>Description:</strong> {category.description}
+          </p>
           {/* <p><strong>Price:</strong> ${category.price}</p>
           <p><strong>Rating:</strong> {category.rating} / 5</p> */}
-{/* 
+          {/* 
           <div className="mt-4">
             <h3 className="text-lg font-semibold">Sizes:</h3>
             <ul className="list-disc ml-5">

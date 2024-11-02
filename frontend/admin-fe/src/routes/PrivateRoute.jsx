@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 // Hàm kiểm tra authentication
 const isAuthenticated = () => {
   const token = localStorage.getItem('access_token');
-  
+
   if (!token) {
     console.error('Token not found');
     return false;
